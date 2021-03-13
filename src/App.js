@@ -122,6 +122,7 @@ function App() {
           />
           <label htmlFor="no">No</label>
         </div>
+        <button type="submit">Send</button>
       </form>
     </div>
   );
