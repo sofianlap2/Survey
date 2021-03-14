@@ -43,7 +43,9 @@ input:focus, textarea:focus {
 
 input {
   margin-right: 10px;
-  ;
+}
+.age-inp{
+  width: 50px;
 }
 
 #event-time {

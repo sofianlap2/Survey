@@ -1,25 +1,69 @@
 import React, { useState } from 'react'
 import './App.css';
-
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 function App() {
 
-  const [phone, setPhone] = useState(false);
-  const [email, setEmail] = useState(false);
-  const [phoneInput, setPhoneInput] = useState('');
-  const [emailInput, setEmailInput] = useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState();
+
+  const [information, setInformation] = useState();
   const [age, setAge] = useState('');
   const [married, setMarried] = useState();
   const [social, setSocial] = useState();
   const [reason, setReason] = useState('');
   const [date, setDate] = useState(`${new Date().getFullYear()}-${`${new Date().getMonth()}`}-${`${new Date().getDay()}`.padStart(2, 0)} ${`${new Date().getHours()}`}:${`${new Date().getMinutes()}`}`)
 
+  const userInfo = {
+    name: name,
+    email: email,
+    phone: phone,
+    dateappointment: date,
+    reason: reason,
+    information: information,
+    age: age,
+    married: married
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // const newUser = await axios.post('/addAnswer', userInfo)
+    // if (newUser) <Redirect to='/pdf' />
+    // else {
+    //   return 'Please verify your informations'
+    // }
+    console.log(userInfo)
+  }
+
   return (
     <div className="App">
       <div className="event-name">
         <h1>Event feedback Survey</h1>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          required
+        />
+        <label>Email</label>
+        <input
+          type="text"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          required
+        />
+        <label>Phone</label>
+        <input
+          type="number"
+          onChange={(e) => setPhone(e.target.value)}
+          value={phone}
+          required
+        />
         <label htmlFor="event-time">Please enter your desired date and time for the appointment</label>
         <input
           type="datetime-local"
@@ -27,6 +71,7 @@ function App() {
           name="event-time"
           defaultValue={date}
           onChange={(e) => setDate(e.target.value)}
+          required
         />
         <label htmlFor="reason"> Reason for appointment</label>
         <textarea
@@ -37,6 +82,7 @@ function App() {
           id="reason"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
+          required
         />
         <label htmlFor="social">How did you hear about this event</label>
         <div>
@@ -71,37 +117,29 @@ function App() {
           <input type="checkbox"
             id="phone"
             name="phone"
-            checked={phone}
-            onChange={e => setPhone(e.target.checked)}
+            value='phone'
+            onChange={e => setInformation(e.target.value)}
           />
-          <label htmlFor="phone">phone {phone ?
-            (<input
-              type="number"
-              onChange={(e) => setPhoneInput(e.target.value)}
-              value={phoneInput}
-            />)
-            : ''}
-          </label>
+          <label htmlFor="phone">phone </label>
         </div>
         <div>
           <input type="checkbox"
             id="email"
             name="email"
-            checked={email}
-            onChange={e => setEmail(e.target.checked)}
+            value="email"
+            onChange={e => setInformation(e.target.value)}
           />
           <label htmlFor="email">
-            email {email ?
-              (<input type="email"
-                onChange={(e) => setEmailInput(e.target.value)}
-                value={emailInput}
-              />)
-              : ''}</label>
+            email </label>
         </div>
         <label htmlFor="age">What is your age?</label>
-        <input id="age" type="number"
+        <input
+        className="age-inp"
+        id="age"
+         type="number"
           onChange={(e) => setAge(e.target.value)}
           value={age}
+          required
         />
         <label>Are you married</label>
         <div>
@@ -129,3 +167,4 @@ function App() {
 }
 
 export default App;
+
